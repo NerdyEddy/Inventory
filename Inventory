@@ -1,0 +1,76 @@
+
+public class Inventory {
+	
+		private static int numOfObjects = 0;
+		private String productName;
+		private int unitsInStock;
+		private double unitPrice;
+		
+		Inventory (String name) 
+		{
+			productName = name;
+			unitsInStock = 0;
+			unitPrice = 0;
+			numOfObjects++;
+			System.out.println("New Inventory successful");
+
+		}
+		
+		Inventory (String name, int units, double price) 
+		{
+			
+			productName = name;
+			unitsInStock = units;
+			unitPrice = price;
+			numOfObjects++;
+			System.out.println("New Inventory successful");
+			
+			
+		}
+		
+		
+		public static int getNumOfObjects ()
+		{
+			return numOfObjects;
+		}
+		
+		public void setProductName (String productName)
+		{
+			this.productName = productName;
+		}
+		
+		public String getProductName()
+		{
+			return productName;
+		}
+		
+		public void setUnitsInStock (int units)
+		{
+			this.unitsInStock = units; 
+			if (unitsInStock < 0)
+			{
+				unitsInStock = 0;
+			}
+		}
+		
+		public int getUnitsInStock ()
+		{
+			return unitsInStock;
+		}
+		
+		public void setUnitPrice (double price)
+		{
+				this.unitPrice = price; 
+				if (unitPrice < 0.00)
+				{
+					unitPrice = 0.00;
+				}
+		}
+		
+		public double getUnitPrice ()
+		{
+			return unitPrice;
+		}
+		
+		
+}
