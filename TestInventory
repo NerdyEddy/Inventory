@@ -1,0 +1,194 @@
+import java.util.Scanner;
+
+
+public class TestInventory {
+
+	/**
+	 * @param args
+	 */
+
+	public static void main(String[] args) 
+	{
+
+		
+		char userInput; // used to hold the input char to compare it to the letters that correspond with operations
+		char modify = 0; // holds the same purpose as the above variable except to be used in the modify operations
+		char Stock; // used to determine if the user want to add stock united when they first create the new object
+		int units = 0; // used to hold the number of units in stock when the user first adds new object
+		int i = 0; // counter used for displaying the correct object array when the user adds new stock
+		int addSubStock = 0; // used for adding and subtracting when user the setter methods for adding and Sub units in stock
+		int getAddSubStock = 0; // holds the current value of the Units in Stock
+		int index = 0; // used to reference to the corresponding elements of the automobiles array
+		double setPrice = 0.00; // holds the new value of the Price per Unit
+		double price = 0.00; // holds the value of the price when the user sets the price when first asked
+		String newProductName; // holds the value of the new product name when the user modifies the array
+		String Stockk; 
+		String modifyy;
+		String userInputt;
+		String personName;
+		String productName;
+		Scanner input = new Scanner (System.in);
+		
+		Inventory[] data = new Inventory[10]; // array of 10 objects
+		
+		System.out.print("Please enter your name: ");
+		personName = input.nextLine();
+		
+		System.out.println("Welcome " +personName+ "!");
+		
+		
+		do // will continously run until the user enters Q
+		{
+			System.out.println("What type of operation would you like to perform?");
+			System.out.print("N = New Inventory, D = Display Inventory, M = Modify Inventory, Q = Quit: ");
+			userInputt = input.next();               //hold the value of the users input
+			userInput = userInputt.charAt(0);        //takes only the 1st letter of the users input
+			
+			if (userInput == 'N')                       // compares user input to the given letter
+			{
+
+				if (Inventory.getNumOfObjects()== 10) // if user has entered all 10 objects, it will print a message
+					                                  // to avoid an array out of bounds exception
+				{
+					System.out.println("you have entered the maxium amount of objects");
+				}
+				else
+				{
+					System.out.print("Please enter the product Name: "); // asks for the name attribute of the object
+					productName = input.next();
+					System.out.print("Any units in stock or unit price to declare? (Y or N): ");
+					Stockk = input.next();
+					Stock = Stockk.charAt(0);
+				
+			
+				
+				if (Stock == 'Y')
+				{
+					System.out.print("Enter the number of units in stock: ");
+					units = input.nextInt();
+					System.out.print("Enter the price of each unit: ");
+					price = input.nextDouble();
+					data[Inventory.getNumOfObjects()] = new Inventory(productName, units, price); // instantiate a new object
+					displayInventory(data, i); // displays the new object
+					i++;
+				}
+				else
+				{
+					data[Inventory.getNumOfObjects()] = new Inventory(productName); // instantiate a new object
+					displayInventory(data, i); // displays the new object
+					i++;
+				}
+				}
+			}
+			if (userInput == 'D')
+			{
+				if (Inventory.getNumOfObjects() == 0)  // sends message if user does not have any objects instantiated yet
+				{
+					System.out.println("There are no objects to be displayed");
+				}
+				else
+				{
+					displayInventory(data); // displays all objects that are instantiated
+				}
+				
+			}
+			
+			
+			if (userInput == 'M')
+			{
+				if (Inventory.getNumOfObjects() == 0) // displays message is there are no objects to modify
+				{
+					System.out.println("No inventory objects allocated. No operation Performed!");
+				}
+				else
+				{
+					displayInventory(data);  //shows all objects that have been instantiated and asks the user various operations
+					System.out.print("please enter the valid # from inventory list to modify: ");
+					index = input.nextInt();
+					System.out.println("Which type of MODIFY operation would you like to perform?");
+					System.out.print("N = Set Productname, A = Add units in Stock, S = Subtract Units in Stock, P = Set Unit Price: ");
+					modifyy = input.next();
+					modify = modifyy.charAt(0);
+					
+					if (modify == 'A') 
+					{
+						System.out.print("Please enter the amount of Stock Units you want to Add: ");
+						addSubStock = input.nextInt();
+						getAddSubStock = automobiles[index].getUnitsInStock(); // gets the current stock amount
+						data[index].setUnitsInStock(getAddSubStock + addSubStock); // add the current stock amount to the user input
+						System.out.println();
+						System.out.println("Add Units in Stock successful!");
+						displayInventory(data, index); // prints the changes to the object
+						
+					}
+					if (modify == 'N')
+					{
+				
+						System.out.print("Please enter the new Product Name: ");
+						newProductName = input.next();
+						data[index].setProductName(newProductName); // sets the product name to the users
+						System.out.println();
+						System.out.println("Product name change successful!");
+						displayInventory(data, index); // displays the changed to object
+					}
+					if (modify == 'S')
+					{
+						System.out.print("Please enter the amount of Stock Units you want to Subtract: ");
+						addSubStock = input.nextInt();
+						getAddSubStock = data[index].getUnitsInStock(); // gets current Stock amount
+						data[index].setUnitsInStock(getAddSubStock - addSubStock); // subtracts the user amount from current amount 
+						System.out.println();
+						System.out.println("Subtract Units in Stock successful!");
+						displayInventory(data, index); // displays changes to object
+						
+					}
+					if (modify == 'P')
+					{
+						System.out.print("please enter the New Unit Price: ");
+						setPrice = input.nextDouble();
+						data[index].setUnitPrice(setPrice); // sets unit price to user input
+						System.out.println();
+						System.out.println("The New Unit Price was successful!");
+						displayInventory(data, index); // displays changes to object
+					}
+				}
+			}
+			
+		} while (userInput != 'Q'); // quits when user input is Q
+		
+		System.out.println();  // thanks you message when user quits
+		System.out.print("Thanks " +personName+ " have a GREAT day!!");
+	}
+	
+	// method that is called when the D is press for display
+	public static void displayInventory(Inventory[] data)
+	{
+		int i = 0;
+		
+		System.out.println("# Product Name    In Stock   Unit Price");
+		System.out.println("- ------------    --------   ----------");
+		
+		do
+		{
+			System.out.format("%-1d %-12s    %-8d   $%-9.2f", i, data[i].getProductName() , data[i].getUnitsInStock(), data[i].getUnitPrice());
+			System.out.println();
+			i++;
+		}while(i < Inventory.getNumOfObjects());
+	}
+	
+	// method that is use then only modifying one object
+	public static void displayInventory(Inventory[] automobiles, int index)
+	{
+		int i = 0;
+		i = index;
+		
+		System.out.println("# Product Name    In Stock   Unit Price");
+		System.out.println("- ------------    --------   ----------");
+		
+		System.out.format("%-1d %-12s    %-8d   $%-9.2f", i, automobiles[i].getProductName() , automobiles[i].getUnitsInStock(), automobiles[i].getUnitPrice());
+		System.out.println();
+	}
+
+	}
+
+
